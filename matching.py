@@ -38,7 +38,7 @@ def read_input(file_path = ''):
             temp = list(map(int, row.strip().split(' ')))
             # This array will be built as a comparison array.
             for j in range(len(temp)):
-                second_group[i+1][j+1] = temp[j]
+                second_group[i+1][temp[j]] = j+1
         
         return first_group, second_group
 
@@ -52,7 +52,6 @@ def write_output(file_path, pairings):
                 row += '\n'
             f.write(row)
             
-
 def match(input_file_path = '', output_file_path = ''):
     first_prefs, second_prefs = read_input(input_file_path)   
     if output_file_path == '':
@@ -60,7 +59,6 @@ def match(input_file_path = '', output_file_path = ''):
     # Create empty matchings
     first_matchings = [0] * len(first_prefs)
     second_matchings = [0] * len(second_prefs)
-    (first_matchings, second_matchings)
 
     free = list(range(1,len(first_prefs)))
     while free:
@@ -83,6 +81,5 @@ def match(input_file_path = '', output_file_path = ''):
                 continue
     
     write_output(output_file_path, first_matchings)
-
 
 match("inputs/example1.in", "outputs/example2.out")
