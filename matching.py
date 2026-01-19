@@ -1,6 +1,7 @@
-def read_input(): 
+def read_input(file_path = ''): 
     # Example file_path is inputs/example1.in
-    file_path = input("Enter your file path: ").strip()
+    if file_path == '':
+        file_path = input("Enter your file path: ")
     print(f'Reading in input from {file_path}')
 
     # Try and except block to catch I/O error
@@ -42,6 +43,8 @@ def read_input():
         return first_group, second_group
 
 def write_output(file_path, pairings):
+    if file_path == '':
+        return
     with open(file_path, 'w') as f:
         for i in range(1, len(pairings)):
             row = f'{i} {pairings[i]}'
@@ -50,11 +53,10 @@ def write_output(file_path, pairings):
             f.write(row)
             
 
-def match():
-    # Read input to get the ordering preferences of the first group (students) and second group (hospitals)
-    first_prefs, second_prefs = read_input()
-    file_path = input("Provide a file path to write the output to: ")
-
+def match(input_file_path = '', output_file_path = ''):
+    first_prefs, second_prefs = read_input(input_file_path)   
+    if output_file_path == '':
+        output_file_path = input("Provide a file path to write the output to: ")
     # Create empty matchings
     first_matchings = [0] * len(first_prefs)
     second_matchings = [0] * len(second_prefs)
@@ -80,6 +82,7 @@ def match():
             else:
                 continue
     
-    write_output(file_path, first_matchings)
+    write_output(output_file_path, first_matchings)
 
-match()
+
+match("inputs/example1.in", "outputs/example2.out")
