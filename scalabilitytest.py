@@ -76,7 +76,8 @@ def graph_times(test_cases, times, title):
     plt.ylabel('Time (seconds)')
     plt.grid(True)
     plt.xticks(test_cases)
-    plt.show()
+    #plt.show()
+    plt.savefig(f'graphs/{title}.png')
 
 def scalability_test():
     test_cases = [100*n for n in range(1, 20)]
@@ -84,6 +85,8 @@ def scalability_test():
     verify_times = measure_verify_runtimes(test_cases)
     graph_times(test_cases, match_times, "Matching Algorithm")
     graph_times(test_cases, verify_times, "Verification Algorithm")
+
+
 
 
 scalability_test()
