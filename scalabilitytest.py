@@ -86,7 +86,4 @@ def scalability_test():
     graph_times(test_cases, match_times, "Matching Algorithm")
     graph_times(test_cases, verify_times, "Verification Algorithm")
 
-
-
-
 scalability_test()

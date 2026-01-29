@@ -14,30 +14,99 @@ def read_input(file_path = ''):
     
     with open(file_path, 'r') as f:
         
+        # Make sure file is not empty
+        if f.read(1):
+            f.seek(0)
+        else:
+            print('File is empty. Please provide a valid input file.')
+            return
+        
         # First line in file should be the number of lines.
         n_lines = f.readline().strip()
         if not n_lines.isdigit():
             print("Error: First line in input file is not a number. Must specify n lines first.")
+            return
+        
         n_lines = int(n_lines)
+        total_rows = n_lines * 2 + 1
         
         # Create an empty array for first group of preferences. 
         # Since we are using 1-indexing (preferences can only be permutations of 1...n), we can add an empty row to correct our indexing.
         first_group = [[0] * n_lines]
-        for _ in range(n_lines):
+        for i in range(n_lines):
             row = f.readline()
+
+            if not row:
+                print(f'Invalid input file. File terminates at row {i+1} (0-indexed). File must contain a total of {total_rows} rows, including the first row.')
+                return
 
             # Here, we reverse the order of the preferences so that the most preferred pairings are at the end of the list.
             # This is so that we can pop the highest preference in the list in constant time later on.
             # If we pop any element that isn't at the end of the list, the operation is linear, not constant.
-            first_group.append(list(map(int, row.strip().split(' ')[::-1])))
+            row_stripped = row.strip().split()[::-1]
+
+            # Check if each item in the row is numeric
+            for item in row_stripped:
+                if not item.isdigit():
+                    print(f'Invalid input file. Item {item} in row {i+1} (0-indexed) is not a number.')
+                    return
+
+            # Check if the row is length n
+            if len(row_stripped) != n_lines:
+                print(f'Invalid input file. There are {len(row_stripped)} items in row {i+1} (0-indexed) of input file. This is not the expected row length of n = {n_lines}.')
+                return 
+            
+            row_list = list(map(int, row_stripped))
+
+            # Check if there is exclusively one instance of each number in the group's preference list, or if a number is out of range.
+            duplicates = set()
+            for item in row_list:
+                if item in duplicates:
+                    print(f'Invalid input file. Number {item} is repeated in row {i+1} (0-indexed). Each number in each row must be unique.')
+                    return
+                if item < 0 or item > n_lines:
+                    print(f'Invalid input file. Number {item} in row {i+1} is outside of the range 1...{n_lines}.')
+                    return
+                
+                duplicates.add(item)
+            
+            first_group.append(row_list)
         
         # Create array for second group of preferences.
         second_group = [[0 for _ in range(n_lines + 1)] for _ in range(n_lines + 1)]
         for i in range(n_lines):
             row = f.readline()
+            if not row:
+                print(f'Invalid input file. File terminates at row {n_lines+i+1} (0-indexed). File must contain a total of {total_rows} rows, including the first row.')
+                return
+
+            row_stripped = row.strip().split()[::-1]
+
+            # Check if each item in the row is numeric
+            for item in row_stripped:
+                if not item.isdigit():
+                    print(f'Invalid input file. Item {item} in row {n_lines+i+1} (0-indexed) is not a number.')
+                    return
+            
+            # Check if the length of the parsed list is correct.
+            if len(row_stripped) != n_lines:
+                print(f'Invalid input file. There are {len(temp)} items in row {n_lines+i+1} (0-indexed) of input file. This is more than expected row items {n_lines}.')
+                return 
 
             # No need to reverse this one as it is just used for comparison lookups.
-            temp = list(map(int, row.strip().split(' ')))
+            temp = list(map(int, row_stripped))
+
+            # Check if there is exclusively one instance of each number in the group's preference list, or if a number is out of range.
+            duplicates = set()
+            for item in temp:
+                if item in duplicates:
+                    print(f'Invalid input file. Number {item} is repeated in row {n_lines+i+1} (0-indexed). Each number in each row must be unique.')
+                    return
+                if item < 0 or item > n_lines:
+                    print(f'Invalid input file. Number {item} in row {n_lines+i+1} (0-indexed) is outside of the range 1...{n_lines}.')
+                    return
+                
+                duplicates.add(item)
 
             # This array will be built as a comparison array.
             # second_group[x][y] will correspond to the rank (preference) that x prefers y.
@@ -46,6 +115,11 @@ def read_input(file_path = ''):
 
             for j in range(len(temp)):
                 second_group[i+1][temp[j]] = j+1
+        
+        # Try and read another line to see if the file is empty. If it reads then the input file is invalid and has too many rows.
+        if f.readline():
+            print(f'Invalid input file. File has more than {total_rows} rows. File should have exactly {total_rows} rows for n = {n_lines}. Make sure there is not an extra newline.')
+            return
         
         return first_group, second_group
 
@@ -60,7 +134,13 @@ def write_output(file_path, pairings):
             f.write(row)
             
 def match(input_file_path = '', output_file_path = ''):
-    first_prefs, second_prefs = read_input(input_file_path)   
+    output = read_input(input_file_path)
+
+    # Check if read input file returned something/didn't error out
+    if not output:
+        return
+    
+    first_prefs, second_prefs = output
     if output_file_path == '':
         output_file_path = input("Provide a file path to write the output to: ")
 
@@ -102,4 +182,4 @@ def match(input_file_path = '', output_file_path = ''):
     
     write_output(output_file_path, first_matchings)
 
-#match("inputs/example1.in", "outputs/example2.out")
+#match()
