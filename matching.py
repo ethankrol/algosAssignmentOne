@@ -80,7 +80,7 @@ def read_input(file_path = ''):
                 print(f'Invalid input file. File terminates at row {n_lines+i+1} (0-indexed). File must contain a total of {total_rows} rows, including the first row.')
                 return
 
-            row_stripped = row.strip().split()[::-1]
+            row_stripped = row.strip().split()
 
             # Check if each item in the row is numeric
             for item in row_stripped:
