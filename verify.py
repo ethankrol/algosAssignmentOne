@@ -20,10 +20,65 @@ def verify(input_file_path = '', output_file_path = ''):
     input_data = read_input(input_file_path)
 
     if not input_data:
-        print("INVALID. Empty file.")
+        msg = "INVALID. Empty file."
+        print(msg)
+        write_output(output_file_path, msg)
         return
+    
+    # verify the first line is an integer
+    try: 
+        pair_count = int(input_data[0][0])
+    except ValueError:
+        msg = "INVALID. First line must be an integer representing the number of pairs."
+        print(msg)
+        write_output(output_file_path, msg)
+        return
+    
+    # verify the rest of the input data matches the pair count
+    if len(input_data) != 2*pair_count + pair_count + 1:
+        msg = f"INVALID. Expected {2*pair_count + pair_count} lines of data, but got {len(input_data)}."
+        print(msg)
+        write_output(output_file_path, msg)
+        return
+    
+    # verify the lines representing preferences is correct
+    for i in range(1, 2*pair_count + 1):
+        setLine = set(input_data[i])
+        if len(setLine) != pair_count:
+            msg = f"INVALID. Line {i+1} does not contain {pair_count} unique preferences."
+            print(msg)
+            write_output(output_file_path, msg)
+            return
+        if setLine != set(map(str, range(1, pair_count + 1))):
+            msg = f"INVALID. Line {i+1} contains invalid preferences. Preferences must be integers from 1 to {pair_count}."
+            print(msg)
+            write_output(output_file_path, msg)
+            return
+    # verify the pairing data is the right length
+    if set(len(line) for line in input_data[2*pair_count+1:]) != {2}:
+        msg = "INVALID. Each matching line must contain exactly two integers representing a pair."
+        print(msg)
+        write_output(output_file_path, msg)
+        return
+    
+    # verify the matching data contains only integers from 1 to pair_count
+    for line in input_data[2*pair_count+1:]:
+        try:
+            a = int(line[0])
+            b = int(line[1])
+            if a < 1 or a > pair_count or b < 1 or b > pair_count:
+                msg = f"INVALID. Matching contains invalid person numbers: {a}, {b}. Must be between 1 and {pair_count}."
+                print(msg)
+                write_output(output_file_path, msg)
+                return
+        except ValueError:
+            msg = f"INVALID. Matching contains non-integer values: {line[0]} -> {line[1]}."
+            print(msg)
+            write_output(output_file_path, msg)
+            return
 
-    pair_count = int(input_data[0][0])
+
+
     preferences_matrix_a = [[-1]*pair_count for _ in range(pair_count)]
     preferences_a = input_data[1:pair_count+1]
     for i in range(pair_count):
@@ -96,4 +151,4 @@ def verify(input_file_path = '', output_file_path = ''):
     print(msg)
     write_output(output_file_path, msg)
 
-# verify()
+verify("inputs/verify_example1.in", "outputs/verify_example1.out")
