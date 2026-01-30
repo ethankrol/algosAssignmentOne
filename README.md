@@ -69,6 +69,10 @@ ex.
 4 4
 ```
 
+### Matching Examples
+
+inputs/example1.in and outputs/example1.out contain populated example input file and output file paths for reference.
+
 ## Verifier
 
 Located at: verify.py
