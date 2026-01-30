@@ -73,7 +73,7 @@ pip3 install matplotlib
 
 The scalability test function works by taking in several test cases in the form of pair_counts.
 
-### Example Function Call ###: scalability_test([100, 200, 300, 400])
+Example Function Call: scalability_test([100, 200, 300, 400])
 
 - This tests cases with 100, 200, 300, and 400 student-hospital pairs
 
