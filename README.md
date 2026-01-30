@@ -7,7 +7,65 @@ Hugo: verifier, example I/O for verifier, scalability
 
 ## Matching Engine
 
--- TODO
+Located at: matching.py
+Dependencies: none
+
+### How to Run:
+
+The matching engine takes in a file as an input.
+
+### Example input
+
+```
+3
+1 2 3
+2 3 1
+2 1 3
+2 1 3
+1 2 3
+1 2 3
+```
+
+- The first line represents the number of students/hospitals (n)
+- The next n lines represents the hospital (or first group) preferences
+- The next n lines represents the student (or second group)
+
+Make sure to match this exact structure when creating a file. The program will notify you if the input file is invalid.
+
+There are examples of invalid files in the inputs/invalid/ folder.
+
+### To Run
+
+matching.py's primary function is _match_. 
+
+_match_ takes in two parameters: an input file string, and an output file string. If no parameters are provided, the program will prompt the user to 
+input an input file path and an output file path.
+
+ex. match("inputs/example1.in", "inputs/example1.out")
+ex. match() -- this will prompt the user for input and output files.
+
+To run _match_, either import the _match_ function into your file, or run matching.py.
+You can edit matching.py's main function (__name__ == __main__) to add parameters to the match() function being called if desired.
+
+Example command: c:/.../algosAssignmentOne/matching.py
+
+### Function Instructions
+
+The match function takes in 2 optional arguments: the input file path and output file path.
+
+- The input file path indicates what file to read from. Omitting this will prompt the user to input a file path on the command line.
+- The output file path indicates what file to print the result to. Omitting this will prompt the user to input a file path on the command line.
+
+The output file will contain a list of matchings between hospitals (group 1) and students (group 2). 
+
+ex. 
+
+```
+1 2
+2 3
+3 1
+4 4
+```
 
 ## Verifier
 
@@ -17,6 +75,8 @@ Dependencies: none
 ### How to Run:
 
 The verifier takes in the original matching input as input, with the matching output concatenated after it.
+
+Example command: c:/.../algosAssignmentOne/verify.py
 
 ### Example Input
 
