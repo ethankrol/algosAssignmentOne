@@ -151,4 +151,5 @@ def verify(input_file_path = '', output_file_path = ''):
     print(msg)
     write_output(output_file_path, msg)
 
-verify("inputs/verify_example1.in", "outputs/verify_example1.out")
+if __name__ == "__main__": 
+    verify("inputs/verify_example3.in","outputs/verify_example3.out")
