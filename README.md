@@ -18,8 +18,9 @@ Dependencies: none
 
 The verifier takes in the original matching input as input, with the matching output concatenated after it.
 
-**Example Input**
+### Example Input
 
+```
 3
 1 2 3
 2 3 1
@@ -30,6 +31,7 @@ The verifier takes in the original matching input as input, with the matching ou
 1 2
 2 3
 3 1
+```
 
 - The first line represents the number of students/hospitals (n)
 - The next n\*2 lines represents the hospital and student preferences
@@ -39,13 +41,13 @@ Make sure to create a file like this, or note the file locations of one of the v
 
 To create one on your own easily, you can run the matching function and concatenate the result .out file to the original input file.
 
-**To Run**
+### To Run
 
 Either run verify.py, or import the _verify_ function from verify.py and run in a separate file.
 
 Example command: c:/.../algosAssignmentOne/verify.py
 
-**Function Instructions**
+### Function Instructions
 
 The verify function takes in 2 optional arguments: the input file path and output file path.
 
@@ -71,26 +73,31 @@ pip3 install matplotlib
 
 The scalability test function works by taking in several test cases in the form of pair_counts.
 
-**Example Function Call**: scalability_test([100, 200, 300, 400])
+### Example Function Call ###: scalability_test([100, 200, 300, 400])
 
 - This tests cases with 100, 200, 300, and 400 student-hospital pairs
 
-It works by searching the /inputs and /outputs folders for files with the names
-*input/scalability*verify_input*[pair_count].txt
-*input/scalability*verify_input*[pair_count].txt
+It works by searching the inputs and outputs folders for files with the names
+
+- input/scalability*verify_input*[pair_count].txt
+- input/scalability*verify_input*[pair_count].txt
 
 **If these files do not exist, the function will generate new ones automatically**
+
 Therefore, you can run scalability_test([100, 200, 300, 400]) with no existing files, and the function will randomly generate example test files corresponding to the pair counts automatically.
-**Note**
+
+**Note**:
 
 these generated files always result in valid matchings/inputs, so there should be no errors or unstable results from the verifier. Therefore the verification scalability test will test verifying stable matchings
 
-**To Run**
+### To Run
+
 Either run scalabilitytest.py after editing the _test_cases_ variable, or import scalability_test from scalabilitytest.py and run in a separate file.
 
 Example command: c:/.../algosAssignmentOne/scalabilitytest.py
 
-**Function Instructions**
+### Function Instructions
+
 As explained earlier, the function takes in 1 required test_cases variable in the form of a python list of integers.
 
 The function will output two matplotlib graphs. These graphs will also be saved under /graphs directory.
