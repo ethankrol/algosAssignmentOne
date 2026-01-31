@@ -179,7 +179,10 @@ def match(input_file_path = '', output_file_path = ''):
             # Otherwise, reject the pairing.
             else:
                 continue
-    
+
+    print("MATCHINGS:")
+    for i, matching in enumerate(first_matchings[1:]):
+        print(i+1, matching)
     write_output(output_file_path, first_matchings)
 
 if __name__ == "__main__":
